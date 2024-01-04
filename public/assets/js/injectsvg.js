@@ -9,3 +9,5 @@ function injectSvgSprite(path) {
     document.body.insertBefore(div, document.body.childNodes[0]);
     }
 }
+
+injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg'); 
