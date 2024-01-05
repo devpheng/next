@@ -9,3 +9,77 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Review    Review[]
+  Product   Product[]
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product[]
+}
+
+model Photo {
+  id        Int      @id @default(autoincrement())
+  product   Product  @relation(fields: [productId], references: [id])
+  productId Int
+  url       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tag {
+  id        Int              @id @default(autoincrement())
+  name      String
+  products  TagsOnProducts[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+}
+
+model TagsOnProducts {
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+  tag       Tag     @relation(fields: [tagId], references: [id])
+  tagId     Int
+
+  @@id([productId, tagId])
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  product   Product  @relation(fields: [productId], references: [id])
+  productId Int
+  comment   String   @db.Text
+  star      Int
+  createdBy User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id          Int              @id @default(autoincrement())
+  name        String
+  price       Float
+  sku         String
+  category    Category         @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+  tags        TagsOnProducts[]
+  qty         Int
+  description String           @db.Text
+  reviews     Review[]
+  photos      Photo[]
+  createdBy   User             @relation(fields: [userId], references: [id])
+  userId      Int
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
