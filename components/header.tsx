@@ -1,8 +1,27 @@
 "use client";
+import { getFavorites } from "@/actions/favorite";
+import { useData } from "@/context/datacontext";
 import { useSession, signIn, signOut } from "next-auth/react"
+import { useEffect } from "react";
 
 export const Header = () => {
     const { data: session } = useSession();
+    const { favorite, setFavorite } = useData();
+    useEffect(()=>{
+        if(session) {
+            fetch('/api/favorite/'+session?.user?.email)
+            .then(async (response) => {
+                const data = await response.json();
+                console.log(data);
+                let favorites = data.map((fav)=>{
+                    let {id, name, price} = fav.product;
+                    let photo = fav.product.photos[0].url;
+                    return {id, name, price, photo};
+                });
+                setFavorite(favorites);
+            });
+        }
+    }, [session?.user?.email]);
     return (
         <header className="header bg-white">
             <div className="container px-lg-3">
@@ -25,7 +44,7 @@ export const Header = () => {
                         </ul>
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item"><a className="nav-link" href="cart.html"> <i className="fas fa-dolly-flatbed me-1 text-gray"></i>Cart<small className="text-gray fw-normal">(2)</small></a></li>
-                            <li className="nav-item"><a className="nav-link" href="#!"> <i className="far fa-heart me-1"></i><small className="text-gray fw-normal"> (0)</small></a></li>
+                            <li className="nav-item"><a className="nav-link" href="#!"> <i className="far fa-heart me-1"></i><small className="text-gray fw-normal"> ({favorite.length})</small></a></li>
                             {session ?
                                 <li className="nav-item"><a className="nav-link" href="javascript:void(0)" onClick={() => signOut()}> <img src={session?.user?.image} alt="profile" style={{'border-radius': '50%'}} width='20px' />{session?.user?.name}</a></li>
                                 :
