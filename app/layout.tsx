@@ -27,7 +27,7 @@ export default function RootLayout({
       <SessionWrapper>
         <html lang="en">
           <head>
-            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <meta name="robots" content="all,follow" />
             <link rel="stylesheet" href="/assets/vendor/glightbox/css/glightbox.min.css" />
