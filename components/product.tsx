@@ -17,10 +17,11 @@ export const Product = ({ product }) => {
                     </a>
                     <div className="product-overlay">
                         <ul className="mb-0 list-inline">
-                            {isFavorite.length != 0
-                                ? <li className="list-inline-item m-0 p-0"><a className="btn btn-sm btn-outline-dark active" href="#!"><i className="far fa-heart"></i></a></li>
-                                : <li className="list-inline-item m-0 p-0"><a className="btn btn-sm btn-outline-dark" href="#!"><i className="far fa-heart"></i></a></li>
-                            }
+                            <li className="list-inline-item m-0 p-0">
+                                <a className={"btn btn-sm btn-outline-dark " +  (isFavorite.length != 0 ? "active" : "") } href="#!">
+                                    <i className="far fa-heart"></i>
+                                </a>
+                            </li>
                             <li className="list-inline-item m-0 p-0"><a className="btn btn-sm btn-dark" href="cart.html">Add to cart</a></li>
                             <li className="list-inline-item me-0"><a className="btn btn-sm btn-outline-dark" href="#productView" data-bs-toggle="modal"><i className="fas fa-expand"></i></a></li>
                         </ul>
