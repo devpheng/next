@@ -1,16 +1,21 @@
+"use server"
 import { PrismaClient } from '@prisma/client'
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 const prisma = new PrismaClient()
 
 export const getFavorites = async (email: any) => {
     try {
-        if(!email) {
+        if (!email) {
             return [];
         }
 
-        const user = await prisma.user.findFirst({where: {
-            email
-        }});
+        const user = await prisma.user.findFirst({
+            where: {
+                email
+            }
+        });
 
         const favorites = user && await prisma.favorite.findMany(
             {
@@ -27,6 +32,46 @@ export const getFavorites = async (email: any) => {
             }
         );
         return favorites;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const toggleFavorite = async (favorite: any) => {
+    try {
+        const session = await getServerSession(authOptions);
+        const email = session?.user?.email;
+        const user = await prisma.user.findUnique({
+            where: {
+                email: session?.user?.email
+            }
+        });
+        if(!user) {
+            return false;
+        }
+       
+        if (!favorite.id) {
+            console.log("true");
+            const { productId } = favorite;
+            const userId = user.id;
+            const fav = await prisma.favorite.create({
+                data: {
+                    productId,
+                    userId
+                },
+            });
+
+            return fav;
+        } else {
+            console.log("false");
+            const fav = await prisma.favorite.delete({
+                where: {
+                    id: favorite.id,
+                },
+            });
+
+            return fav;
+        }
     } catch (error) {
         console.log(error);
     }

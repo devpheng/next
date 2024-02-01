@@ -1,11 +1,29 @@
 "use client";
-import { useSession } from "next-auth/react"
+import { useEffect, useState } from "react";
+import { toggleFavorite } from "@/actions/favorite";
+
 export const Product = ({ product }) => {
-    const { data: session } = useSession();
-    let email = session?.user?.email;
-    let isFavorite = product.favorites.filter((favorite: any) => {
-        return favorite.user.email == email;
-    });
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [favoriteId, setFavoriteId] = useState(null);
+
+    useEffect(() => {
+        setIsFavorite(product?.favorites?.length);
+        setFavoriteId(product?.favorites ? product.favorites[0]?.id : null);
+    }, [product]);
+   
+    async function setFavorite() {
+        let favorite = { productId: product.id, id: favoriteId };
+        let res = await toggleFavorite(favorite);
+        if(isFavorite || !res){
+            setFavoriteId(null);
+        } else {
+            setFavoriteId(res?.id);
+        }
+        if(res) {
+            setIsFavorite(!isFavorite);
+        }
+        
+    }
 
     return (
         <div className="col-xl-3 col-lg-4 col-sm-6">
@@ -18,7 +36,7 @@ export const Product = ({ product }) => {
                     <div className="product-overlay">
                         <ul className="mb-0 list-inline">
                             <li className="list-inline-item m-0 p-0">
-                                <a className={"btn btn-sm btn-outline-dark " +  (isFavorite.length != 0 ? "active" : "") } href="#!">
+                                <a className={"btn btn-sm btn-outline-dark " +  (isFavorite ? "active" : "") } onClick={setFavorite}>
                                     <i className="far fa-heart"></i>
                                 </a>
                             </li>

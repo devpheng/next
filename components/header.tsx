@@ -8,7 +8,6 @@ export const Header = () => {
     const { data: session } = useSession();
     const { favorite, setFavorite } = useData();
     useEffect(()=>{
-        console.log(session);
         if(session) {
             fetch('/api/favorite/'+session?.user?.email)
             .then(async (response) => {
@@ -46,7 +45,7 @@ export const Header = () => {
                             <li className="nav-item"><a className="nav-link" href="cart.html"> <i className="fas fa-dolly-flatbed me-1 text-gray"></i>Cart<small className="text-gray fw-normal">(2)</small></a></li>
                             <li className="nav-item"><a className="nav-link" href="#!"> <i className="far fa-heart me-1"></i><small className="text-gray fw-normal"> ({favorite.length})</small></a></li>
                             {session ?
-                                <li className="nav-item"><a className="nav-link" onClick={() => signOut()}> <img src={ session?.user?.image } alt="profile" style={{'borderRadius': '50%'}} width='20px' referrerpolicy="no-referrer"/>{session?.user?.name} {session?.user?.id}</a></li>
+                                <li className="nav-item"><a className="nav-link" onClick={() => signOut()}> <img src={ session?.user?.image } alt="profile" style={{'borderRadius': '50%'}} width='20px' referrerPolicy="no-referrer"/>{session?.user?.name}</a></li>
                                 :
                                 <li className="nav-item"><a className="nav-link" onClick={() => signIn()}> <i className="fas fa-user me-1 text-gray fw-normal"></i>Login</a></li>
 
