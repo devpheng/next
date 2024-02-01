@@ -5,8 +5,10 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 const prisma = new PrismaClient()
 
-export const getFavorites = async (email: any) => {
+export const getFavorites = async () => {
     try {
+        const session = await getServerSession(authOptions);
+        const email = session?.user?.email;
         if (!email) {
             return [];
         }
@@ -51,7 +53,6 @@ export const toggleFavorite = async (favorite: any) => {
         }
        
         if (!favorite.id) {
-            console.log("true");
             const { productId } = favorite;
             const userId = user.id;
             const fav = await prisma.favorite.create({
@@ -63,7 +64,6 @@ export const toggleFavorite = async (favorite: any) => {
 
             return fav;
         } else {
-            console.log("false");
             const fav = await prisma.favorite.delete({
                 where: {
                     id: favorite.id,

@@ -1,5 +1,4 @@
 "use client";
-import { getFavorites } from "@/actions/favorite";
 import { useData } from "@/context/datacontext";
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useEffect } from "react";

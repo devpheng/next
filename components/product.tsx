@@ -1,22 +1,32 @@
 "use client";
 import { useEffect, useState } from "react";
 import { toggleFavorite } from "@/actions/favorite";
+import { useData } from "@/context/datacontext";
 
 export const Product = ({ product }) => {
     const [isFavorite, setIsFavorite] = useState(false);
     const [favoriteId, setFavoriteId] = useState(null);
+    const { favorite, setFavorite } = useData();
 
     useEffect(() => {
         setIsFavorite(product?.favorites?.length);
         setFavoriteId(product?.favorites ? product.favorites[0]?.id : null);
     }, [product]);
    
-    async function setFavorite() {
-        let favorite = { productId: product.id, id: favoriteId };
-        let res = await toggleFavorite(favorite);
+    async function setFavoriteData(product) {
+        let favoriteObj = { productId: product.id, id: favoriteId };
+        let res = await toggleFavorite(favoriteObj);
         if(isFavorite || !res){
+            const favs = favorite.filter((fav) => {
+                return fav.id != res?.productId;
+            })
+            setFavorite(favs);
             setFavoriteId(null);
         } else {
+            let {id, name, price} = product;
+            let photo = product.photos[0].url;
+            let favs = [...favorite, {id, name, price, photo}];
+            setFavorite(favs);
             setFavoriteId(res?.id);
         }
         if(res) {
@@ -36,7 +46,7 @@ export const Product = ({ product }) => {
                     <div className="product-overlay">
                         <ul className="mb-0 list-inline">
                             <li className="list-inline-item m-0 p-0">
-                                <a className={"btn btn-sm btn-outline-dark " +  (isFavorite ? "active" : "") } onClick={setFavorite}>
+                                <a className={"btn btn-sm btn-outline-dark " +  (isFavorite ? "active" : "") } onClick={() => {setFavoriteData(product)}}>
                                     <i className="far fa-heart"></i>
                                 </a>
                             </li>
