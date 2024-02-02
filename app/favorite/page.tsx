@@ -7,7 +7,7 @@ export default function Favorite() {
 
     return (
         <div className="container">
-            <h2 className="text-center my-5">Favorite Products</h2>
+            <h2 className="text-center my-5">Wish List</h2>
             <div className="row">
                 {favorite.map((product: any) => {
                     return <Product product={product} key={product.id}/> 

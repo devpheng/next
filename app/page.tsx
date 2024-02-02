@@ -1,5 +1,6 @@
 import { Categories } from '@/components/categories'
 import { Hero } from '@/components/hero'
+import { Modal } from '@/components/modal'
 import { Products } from '@/components/products'
 import Image from 'next/image'
 // import styles from './page.module.css'
@@ -7,6 +8,7 @@ import Image from 'next/image'
 export default function Home() {
     return (
         <div className="container">
+            <Modal />
             <Hero />
             <Categories />
             <section className="py-5">
