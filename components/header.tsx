@@ -14,7 +14,8 @@ export const Header = () => {
                 let favorites = data.map((fav)=>{
                     let {id, name, price} = fav.product;
                     let photo = fav.product.photos[0].url;
-                    return {id, name, price, photo};
+                    let favorites = [{id: fav.id}];
+                    return {id, name, price, photo, favorites};
                 });
                 setFavorite(favorites);
             });
@@ -23,12 +24,12 @@ export const Header = () => {
     return (
         <header className="header bg-white">
             <div className="container px-lg-3">
-                <nav className="navbar navbar-expand-lg navbar-light py-3 px-lg-0"><a className="navbar-brand" href="index.html"><span className="fw-bold text-uppercase text-dark">Boutique</span></a>
+                <nav className="navbar navbar-expand-lg navbar-light py-3 px-lg-0"><a className="navbar-brand" href="/"><span className="fw-bold text-uppercase text-dark">Boutique</span></a>
                     <button className="navbar-toggler navbar-toggler-end" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span></button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto">
                             <li className="nav-item">
-                                <a className="nav-link active" href="index.html">Home</a>
+                                <a className="nav-link active" href="/">Home</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="shop.html">Shop</a>
@@ -42,7 +43,7 @@ export const Header = () => {
                         </ul>
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item"><a className="nav-link" href="cart.html"> <i className="fas fa-dolly-flatbed me-1 text-gray"></i>Cart<small className="text-gray fw-normal">(2)</small></a></li>
-                            <li className="nav-item"><a className="nav-link" href="#!"> <i className="far fa-heart me-1"></i><small className="text-gray fw-normal"> ({favorite.length})</small></a></li>
+                            <li className="nav-item"><a className="nav-link" href="/favorite"> <i className="far fa-heart me-1"></i><small className="text-gray fw-normal"> ({favorite.length})</small></a></li>
                             {session ?
                                 <li className="nav-item"><a className="nav-link" onClick={() => signOut()}> <img src={ session?.user?.image } alt="profile" style={{'borderRadius': '50%'}} width='20px' referrerPolicy="no-referrer"/>{session?.user?.name}</a></li>
                                 :

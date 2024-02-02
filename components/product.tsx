@@ -25,7 +25,8 @@ export const Product = ({ product }) => {
         } else {
             let {id, name, price} = product;
             let photo = product.photos[0].url;
-            let favs = [...favorite, {id, name, price, photo}];
+            let favoriteArr = [{id: res?.id}]
+            let favs = [...favorite, {id, name, price, photo, favoriteArr}];
             setFavorite(favs);
             setFavoriteId(res?.id);
         }
@@ -36,12 +37,12 @@ export const Product = ({ product }) => {
     }
 
     return (
-        <div className="col-xl-3 col-lg-4 col-sm-6">
+        <div className="col-xl-3 col-lg-4 col-sm-6" key={product.id}>
             <div className="product text-center">
                 <div className="position-relative mb-3">
                     <div className="badge text-white bg-"></div>
                     <a className="d-block" href="detail.html">
-                        <img className="img-fluid w-100" src={product.photos[0]?.url} alt="..." />
+                        <img className="img-fluid w-100" src={product.photos ? product.photos[0]?.url : product.photo } alt="..." />
                     </a>
                     <div className="product-overlay">
                         <ul className="mb-0 list-inline">
