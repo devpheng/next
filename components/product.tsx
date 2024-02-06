@@ -6,12 +6,26 @@ import { useData } from "@/context/datacontext";
 export const Product = ({ product }) => {
     const [isFavorite, setIsFavorite] = useState(false);
     const [favoriteId, setFavoriteId] = useState(null);
-    const { favorite, setFavorite } = useData();
+    const { favorite, setFavorite, setProductModal } = useData();
 
     useEffect(() => {
         setIsFavorite(product?.favorites?.length);
         setFavoriteId(product?.favorites ? product.favorites[0]?.id : null);
     }, [product]);
+
+    useEffect(() => {
+        let fav = favorite.filter((fav) => {
+            return fav.id == product.id
+        });
+        if(fav.length > 0) {
+            setIsFavorite(true);
+            setFavoriteId(fav[0].favorites ? fav[0].favorites[0].id : null);
+        } else {
+            setIsFavorite(false);
+            setFavoriteId(null);
+        }
+
+    }, [favorite]);
    
     async function setFavoriteData(product) {
         let favoriteObj = { productId: product.id, id: favoriteId };
@@ -33,7 +47,6 @@ export const Product = ({ product }) => {
         if(res) {
             setIsFavorite(!isFavorite);
         }
-        
     }
 
     return (
@@ -52,7 +65,9 @@ export const Product = ({ product }) => {
                                 </a>
                             </li>
                             <li className="list-inline-item m-0 p-0"><a className="btn btn-sm btn-dark" href="cart.html">Add to cart</a></li>
-                            <li className="list-inline-item me-0"><a className="btn btn-sm btn-outline-dark" href="#productView" data-bs-toggle="modal"><i className="fas fa-expand"></i></a></li>
+                            <li className="list-inline-item me-0">
+                                <a className="btn btn-sm btn-outline-dark" href="#productView" data-bs-toggle="modal" onClick={() => {setProductModal(product)}}><i className="fas fa-expand"></i></a>
+                            </li>
                         </ul>
                     </div>
                 </div>

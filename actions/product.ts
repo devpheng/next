@@ -17,6 +17,7 @@ export const getProducts = async () => {
             }});
             products = await prisma.product.findMany({include: {
                 photos: true,
+                reviews: true,
                 favorites: {
                     where: { userId: user?.id },
                     include: {
