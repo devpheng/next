@@ -19,17 +19,12 @@ export const Modal = () => {
                 return fav.id != res?.productId;
             })
             setFavorite(favs);
-            setFavoriteId(null);
         } else {
             let {id, name, price} = product;
             let photo = product.photos[0].url;
             let favoriteArr = [{id: res?.id}]
             let favs = [...favorite, {id, name, price, photo, favoriteArr}];
             setFavorite(favs);
-            setFavoriteId(res?.id);
-        }
-        if(res) {
-            setIsFavorite(!isFavorite);
         }
     }
 
@@ -53,7 +48,7 @@ export const Modal = () => {
         });
         if(fav.length > 0) {
             setIsFavorite(true);
-            setFavoriteId(fav[0].favorites ? fav[0].favorites[0].id : null);
+            setFavoriteId(fav[0].favoriteArr ? fav[0].favoriteArr[0].id : null);
         } else {
             setIsFavorite(false);
             setFavoriteId(null);
