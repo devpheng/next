@@ -10,6 +10,7 @@ export default function Favorite() {
             <h2 className="text-center my-5">Wish List</h2>
             <div className="row">
                 {favorite.map((product: any) => {
+                    console.log(product);
                     return <Product product={product} key={product.id}/> 
                 })}
             </div>

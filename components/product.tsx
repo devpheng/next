@@ -19,7 +19,7 @@ export const Product = ({ product }) => {
         });
         if(fav.length > 0) {
             setIsFavorite(true);
-            setFavoriteId(fav[0].favoriteArr ? fav[0].favoriteArr[0].id : null);
+            setFavoriteId(fav[0].favorites ? fav[0].favorites[0].id : null);
         } else {
             setIsFavorite(false);
             setFavoriteId(null);
@@ -38,8 +38,8 @@ export const Product = ({ product }) => {
         } else {
             let {id, name, price} = product;
             let photo = product.photos[0].url;
-            let favoriteArr = [{id: res?.id}]
-            let favs = [...favorite, {id, name, price, photo, favoriteArr}];
+            let favorites = [{id: res?.id}]
+            let favs = [...favorite, {id, name, price, photo, favorites}];
             setFavorite(favs);
         }
     }
