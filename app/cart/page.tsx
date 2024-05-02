@@ -3,7 +3,7 @@ import { CartItem } from "@/components/cartitem";
 import { useData } from "@/context/datacontext";
 
 export default function Cart() {
-    const { carts, setCarts } = useData();
+    const { carts } = useData();
 
     const totalPrice = () => {
         let total = 0;

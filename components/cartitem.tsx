@@ -32,6 +32,14 @@ export const CartItem = ({cart}) => {
         setCarts(newCarts);
     }
 
+    const remove = (id) => {
+        const newCarts = carts.filter((cart) => {
+            return cart.id != id;
+        });
+
+        setCarts(newCarts);
+    }
+
     return (
         <tr>
             <th className="ps-0 py-3 border-light" scope="row">
@@ -72,7 +80,7 @@ export const CartItem = ({cart}) => {
                 <p className="mb-0 small">${cart.price * cart.qty}</p>
             </td>
             <td className="p-3 align-middle border-light">
-                <a className="reset-anchor" href="#">
+                <a className="reset-anchor" href='javascript:void(0)' onClick={() => { remove(cart.id) }}>
                     <i className="fas fa-trash-alt small text-muted"></i>
                 </a>
             </td>
