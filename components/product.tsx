@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { toggleFavorite } from "@/actions/favorite";
 import { useData } from "@/context/datacontext";
+import Image from "next/image";
 
 export const Product = ({ product }) => {
     const [isFavorite, setIsFavorite] = useState(false);
@@ -50,7 +51,14 @@ export const Product = ({ product }) => {
                 <div className="position-relative mb-3">
                     <div className="badge text-white bg-"></div>
                     <a className="d-block" href="detail.html">
-                        <img className="img-fluid w-100" src={product.photos ? product.photos[0]?.url : product.photo } alt="..." />
+                        <Image
+                            src={product.photos ? product.photos[0]?.url : product.photo }
+                            alt={product.name}
+                            width={0}
+                            height={0}
+                            sizes="100vw"
+                            style={{ width: '100%', height: 'auto' }}
+                        />
                     </a>
                     <div className="product-overlay">
                         <ul className="mb-0 list-inline">
