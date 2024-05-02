@@ -3,11 +3,14 @@ import { useEffect, useState } from "react";
 import { toggleFavorite } from "@/actions/favorite";
 import { useData } from "@/context/datacontext";
 import Image from "next/image";
+import { useRouter } from 'next/navigation'
+
 
 export const Product = ({ product }) => {
     const [isFavorite, setIsFavorite] = useState(false);
     const [favoriteId, setFavoriteId] = useState(null);
-    const { favorite, setFavorite, setProductModal } = useData();
+    const { favorite, setFavorite, setProductModal, carts, setCarts } = useData();
+    const router = useRouter();
 
     useEffect(() => {
         setIsFavorite(product?.favorites?.length);
@@ -45,6 +48,21 @@ export const Product = ({ product }) => {
         }
     }
 
+    function addToCart(product, qty) {
+        if (!carts.find(cart => cart.id === product.id)) {
+            const {id, name, price } = product;
+            const newCarts = [...carts, {
+                id,
+                name,
+                price,
+                photo: product.photos[0]?.url,
+                qty
+            }];
+            setCarts(newCarts);
+        }
+        router.push('/cart');
+    }
+
     return (
         <div className="col-xl-3 col-lg-4 col-sm-6" key={product.id}>
             <div className="product text-center">
@@ -67,7 +85,9 @@ export const Product = ({ product }) => {
                                     <i className="far fa-heart"></i>
                                 </a>
                             </li>
-                            <li className="list-inline-item m-0 p-0"><a className="btn btn-sm btn-dark" href="cart.html">Add to cart</a></li>
+                            <li className="list-inline-item m-0 p-0">
+                                <a className="btn btn-sm btn-dark" href="javascript:void(0)" onClick={() => {addToCart(product, 1)}}>Add to cart</a>
+                            </li>
                             <li className="list-inline-item me-0">
                                 <a className="btn btn-sm btn-outline-dark" href="#productView" data-bs-toggle="modal" onClick={() => {setProductModal(product)}}><i className="fas fa-expand"></i></a>
                             </li>
