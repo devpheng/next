@@ -4,7 +4,7 @@ import { toggleFavorite } from "@/actions/favorite";
 import { useData } from "@/context/datacontext";
 
 export const Modal = () => {
-    const { productModal, favorite, setFavorite } = useData();
+    const { productModal, favorite, setFavorite, carts, setCarts} = useData();
     const [ rate, setRate] = useState(0);
     const [ qty, setQty] = useState(1);
     const [ price, setPrice] = useState(0);
@@ -26,6 +26,22 @@ export const Modal = () => {
             let favs = [...favorite, {id, name, price, photo, favorites}];
             setFavorite(favs);
         }
+    }
+
+    function addToCart(product, qty) {
+        if (!carts.find(cart => cart.id === product.id)) {
+            const {id, name, price } = product;
+            const newCarts = [...carts, {
+                id,
+                name,
+                price,
+                photo: product.photos[0]?.url,
+                qty
+            }];
+            setCarts(newCarts);
+        }
+
+        window.location.href = "/cart";
     }
 
     useEffect(() => {
@@ -85,12 +101,14 @@ export const Modal = () => {
                                                 <span className="small text-uppercase text-gray mr-4 no-select">Quantity</span>
                                                 <div className="quantity">
                                                     <button className="dec-btn p-0" onClick={() => {setQty((qty - 1) < 1 ? 1 : qty - 1)}}><i className="fas fa-caret-left"></i></button>
-                                                    <input className="form-control border-0 shadow-0 p-0" type="text" defaultValue={qty} />
+                                                    <input className="form-control border-0 shadow-0 p-0" type="text" defaultValue={qty}  value={qty}/>
                                                     <button className="inc-btn p-0" onClick={() => {setQty(qty + 1)}}><i className="fas fa-caret-right"></i></button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-sm-5"><a className="btn btn-dark btn-sm w-100 h-100 d-flex align-items-center justify-content-center px-0" href="cart.html">Add to cart</a></div>
+                                        <div className="col-sm-5">
+                                            <a className="btn btn-dark btn-sm w-100 h-100 d-flex align-items-center justify-content-center px-0" href="javascript:void(0)" onClick={() => {addToCart(productModal, 1)}}>Add to cart</a>
+                                        </div>
                                     </div>
                                     <a className="btn btn-link text-dark text-decoration-none p-0" onClick={() => {setFavoriteData(productModal)}}>
                                         <i className={`${isFavorite ? 'fas' : 'far'} fa-heart me-2`}></i>Add to wish list

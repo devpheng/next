@@ -6,19 +6,33 @@ import Link from "next/link";
 
 export const Header = () => {
     const { data: session } = useSession();
-    const { favorite, setFavorite, carts } = useData();
+    const { favorite, setFavorite, carts, setCarts } = useData();
     useEffect(()=>{
         if(session) {
             fetch('/api/favorite/'+session?.user?.email)
             .then(async (response) => {
                 const data = await response.json();
-                let favorites = data.map((fav)=>{
-                    let {id, name, price} = fav.product;
-                    let photo = fav.product.photos[0].url;
-                    let favorites = [{id: fav.id}];
-                    return {id, name, price, photo, favorites};
+                if(data) {
+                    let favorites = data.map((fav)=>{
+                        let {id, name, price} = fav.product;
+                        let photo = fav.product.photos[0].url;
+                        let favorites = [{id: fav.id}];
+                        return {id, name, price, photo, favorites};
+                    });
+                    setFavorite(favorites);
+                }
+            });
+
+            fetch('/api/cart')
+            .then(async (response) => {
+                const data = await response.json();
+                let carts = data?.map((cart)=>{
+                    let {id, qty} = cart;
+                    let {name, price} = cart.product; 
+                    let photo = cart.product.photos[0].url;
+                    return {id, name, price, photo, qty};
                 });
-                setFavorite(favorites);
+                setCarts(carts);
             });
         }
     }, [session?.user?.email]);

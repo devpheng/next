@@ -7,8 +7,10 @@ const DataProvider = ({ children }) => {
   const [favorite, setFavorite] = useState([]);
   const [productModal, setProductModal] = useState({});
 
+  const [carts, setCarts] = useState([]);
+
   return (
-    <DataContext.Provider value={{ favorite, setFavorite, productModal, setProductModal }}>
+    <DataContext.Provider value={{ favorite, setFavorite, productModal, setProductModal, carts, setCarts }}>
       {children}
     </DataContext.Provider>
   );
