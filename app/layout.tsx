@@ -6,6 +6,7 @@ import Footer from '@/components/footer'
 import { Script } from '@/components/script'
 import SessionWrapper from '@/components/sessionwrapper'
 import AppDataProvider from '@/components/appdataprovider'
+import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -42,6 +43,7 @@ export default function RootLayout({
           <body className={inter.className}>
               <div className="page-holder">
                 <Header />
+                <Toaster position="top-right" />
                 {children}
                 <Footer />
                 <Script />
