@@ -38,3 +38,33 @@ export const getCarts = async () => {
         console.log(error);
     }
 }
+
+export const addToCart = async (productId, qty=1) => {
+    try {
+        const session = await getServerSession(authOptions);
+        const email = session?.user?.email;
+        if (!email) {
+            return [];
+        }
+
+        const user = await prisma.user.findFirst({
+            where: {
+                email
+            }
+        });
+
+        const cart = user && await prisma.cart.create(
+            {
+                data: {
+                    productId: parseInt(productId),
+                    userId: user.id,
+                    qty
+                }
+            }
+        );
+        return cart;
+    } catch (error) {
+        console.log(error);
+    }
+
+}

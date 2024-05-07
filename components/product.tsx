@@ -4,13 +4,28 @@ import { toggleFavorite } from "@/actions/favorite";
 import { useData } from "@/context/datacontext";
 import Image from "next/image";
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-hot-toast'
 
 
-export const Product = ({ product }) => {
+export const Product = ({ product, addToCart }) => {
     const [isFavorite, setIsFavorite] = useState(false);
     const [favoriteId, setFavoriteId] = useState(null);
     const { favorite, setFavorite, setProductModal, carts, setCarts } = useData();
     const router = useRouter();
+
+    // async function createInvoice(formData: FormData) {
+    //     'use server'
+    //     console.log(formData);
+     
+    //     // const rawFormData = {
+    //     //     customerId: formData.get('customerId'),
+    //     //     amount: formData.get('amount'),
+    //     //     status: formData.get('status'),
+    //     // }
+    
+    // // mutate data
+    // // revalidate cache
+    // }
 
     useEffect(() => {
         setIsFavorite(product?.favorites?.length);
@@ -48,7 +63,7 @@ export const Product = ({ product }) => {
         }
     }
 
-    function addToCart(product, qty) {
+    function addToCarts(formData: FormData) {
         if (!carts.find(cart => cart.id === product.id)) {
             const {id, name, price } = product;
             const newCarts = [...carts, {
@@ -56,11 +71,16 @@ export const Product = ({ product }) => {
                 name,
                 price,
                 photo: product.photos[0]?.url,
-                qty
+                qty: formData.get('qty') ?? 1
             }];
             setCarts(newCarts);
+            addToCart(formData.get('productId'));
+            router.push('/cart');
+        } else {
+            toast('Product Already in Cart!', {
+                icon: 'ℹ️',
+            });
         }
-        router.push('/cart');
     }
 
     return (
@@ -86,7 +106,10 @@ export const Product = ({ product }) => {
                                 </a>
                             </li>
                             <li className="list-inline-item m-0 p-0">
-                                <a className="btn btn-sm btn-dark" href="javascript:void(0)" onClick={() => {addToCart(product, 1)}}>Add to cart</a>
+                                <form action={addToCarts}>
+                                    <input type="hidden" name="productId" value={product.id} />
+                                    <button type="submit" className="btn btn-sm btn-dark">Add to cart</button>
+                                </form>
                             </li>
                             <li className="list-inline-item me-0">
                                 <a className="btn btn-sm btn-outline-dark" href="#productView" data-bs-toggle="modal" onClick={() => {setProductModal(product)}}><i className="fas fa-expand"></i></a>
