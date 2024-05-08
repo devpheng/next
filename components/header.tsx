@@ -27,10 +27,10 @@ export const Header = () => {
             .then(async (response) => {
                 const data = await response.json();
                 let carts = data?.map((cart)=>{
-                    let {id, qty} = cart;
+                    let {id, productId, qty} = cart;
                     let {name, price} = cart.product; 
                     let photo = cart.product.photos[0].url;
-                    return {id, name, price, photo, qty};
+                    return {id, name, price, photo, qty, productId};
                 });
                 setCarts(carts);
             });

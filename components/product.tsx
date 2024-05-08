@@ -13,20 +13,6 @@ export const Product = ({ product, addToCart }) => {
     const { favorite, setFavorite, setProductModal, carts, setCarts } = useData();
     const router = useRouter();
 
-    // async function createInvoice(formData: FormData) {
-    //     'use server'
-    //     console.log(formData);
-     
-    //     // const rawFormData = {
-    //     //     customerId: formData.get('customerId'),
-    //     //     amount: formData.get('amount'),
-    //     //     status: formData.get('status'),
-    //     // }
-    
-    // // mutate data
-    // // revalidate cache
-    // }
-
     useEffect(() => {
         setIsFavorite(product?.favorites?.length);
         setFavoriteId(product?.favorites ? product.favorites[0]?.id : null);
@@ -63,18 +49,19 @@ export const Product = ({ product, addToCart }) => {
         }
     }
 
-    function addToCarts(formData: FormData) {
-        if (!carts.find(cart => cart.id === product.id)) {
+    async function addToCarts(formData: FormData) {
+        if (!carts.find(cart => cart.productId === product.id)) {
             const {id, name, price } = product;
+            const item = await addToCart(formData.get('productId'));
             const newCarts = [...carts, {
-                id,
+                id: item.id,
                 name,
                 price,
                 photo: product.photos[0]?.url,
-                qty: formData.get('qty') ?? 1
+                qty: formData.get('qty') ?? 1,
+                productId: id
             }];
             setCarts(newCarts);
-            addToCart(formData.get('productId'));
             router.push('/cart');
         } else {
             toast('Product Already in Cart!', {
@@ -107,7 +94,7 @@ export const Product = ({ product, addToCart }) => {
                             </li>
                             <li className="list-inline-item m-0 p-0">
                                 <form action={addToCarts}>
-                                    <input type="hidden" name="productId" value={product.id} />
+                                    <input type="hidden" name="productId" value={product.id} defaultValue={product.id} />
                                     <button type="submit" className="btn btn-sm btn-dark">Add to cart</button>
                                 </form>
                             </li>

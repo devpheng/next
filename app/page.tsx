@@ -73,7 +73,7 @@ export default function Home() {
                         <div className="col-lg-6">
                             <form action="#">
                                 <div className="input-group">
-                                    <input className="form-control form-control-lg" type="email" placeholder="Enter your email address" aria-describedby="button-addon2" />
+                                    <input className="form-control form-control-lg" type="email" placeholder="Enter your email address" aria-describedby="button-addon2" defaultValue=""/>
                                     <button className="btn btn-dark" id="button-addon2" type="submit">Subscribe</button>
                                 </div>
                             </form>

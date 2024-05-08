@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react";
 import { toggleFavorite } from "@/actions/favorite";
 import { useData } from "@/context/datacontext";
+import { toast } from 'react-hot-toast'
 
-export const Modal = () => {
+export const Modal = ({ addToCart }) => {
     const { productModal, favorite, setFavorite, carts, setCarts} = useData();
     const [ rate, setRate] = useState(0);
     const [ qty, setQty] = useState(1);
@@ -28,20 +29,25 @@ export const Modal = () => {
         }
     }
 
-    function addToCart(product, qty) {
-        if (!carts.find(cart => cart.id === product.id)) {
-            const {id, name, price } = product;
+    function addToCarts(formData: FormData) {
+        if (!carts.find(cart => cart.productId === productModal.id)) {
+            const {id, name, price } = productModal;
+            const item = addToCart(formData.get('productId'), formData.get('qty') ?? 1);
             const newCarts = [...carts, {
-                id,
+                id: item.id,
                 name,
                 price,
-                photo: product.photos[0]?.url,
-                qty
+                photo: productModal.photos[0]?.url,
+                qty: formData.get('qty') ?? 1,
+                productId: id
             }];
             setCarts(newCarts);
+            window.location.href = "/cart";
+        } else {
+            toast('Product Already in Cart!', {
+                icon: 'ℹ️',
+            });
         }
-
-        window.location.href = "/cart";
     }
 
     useEffect(() => {
@@ -95,21 +101,24 @@ export const Modal = () => {
                                     <h2 className="h4">{productModal.name}</h2>
                                     <p className="text-muted">${price * qty}</p>
                                     <p className="text-sm mb-4">{productModal.description}</p>
-                                    <div className="row align-items-stretch mb-4 gx-0">
-                                        <div className="col-sm-7">
-                                            <div className="border d-flex align-items-center justify-content-between py-1 px-3">
-                                                <span className="small text-uppercase text-gray mr-4 no-select">Quantity</span>
-                                                <div className="quantity">
-                                                    <button className="dec-btn p-0" onClick={() => {setQty((qty - 1) < 1 ? 1 : qty - 1)}}><i className="fas fa-caret-left"></i></button>
-                                                    <input className="form-control border-0 shadow-0 p-0" type="text" defaultValue={qty}  value={qty}/>
-                                                    <button className="inc-btn p-0" onClick={() => {setQty(qty + 1)}}><i className="fas fa-caret-right"></i></button>
+                                    <form action={addToCarts}>
+                                        <div className="row align-items-stretch mb-4 gx-0">
+                                            <input type="hidden" value={productModal.id} name="productId" defaultValue={productModal.id}/>
+                                            <div className="col-sm-7">
+                                                <div className="border d-flex align-items-center justify-content-between py-1 px-3">
+                                                    <span className="small text-uppercase text-gray mr-4 no-select">Quantity</span>
+                                                    <div className="quantity">
+                                                        <button className="dec-btn p-0" onClick={(e) => { e.preventDefault(); setQty((qty - 1) < 1 ? 1 : qty - 1)}} ><i className="fas fa-caret-left"></i></button>
+                                                        <input className="form-control border-0 shadow-0 p-0" type="text" defaultValue={qty}  value={qty} name="qty"/>
+                                                        <button className="inc-btn p-0" onClick={(e) => { e.preventDefault(); setQty(qty + 1)}}><i className="fas fa-caret-right"></i></button>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <div className="col-sm-5">
+                                                <button type="submit" className="btn btn-dark btn-sm w-100 h-100 d-flex align-items-center justify-content-center px-0">Add to cart</button>
+                                            </div>
                                         </div>
-                                        <div className="col-sm-5">
-                                            <a className="btn btn-dark btn-sm w-100 h-100 d-flex align-items-center justify-content-center px-0" href="javascript:void(0)" onClick={() => {addToCart(productModal, 1)}}>Add to cart</a>
-                                        </div>
-                                    </div>
+                                    </form>
                                     <a className="btn btn-link text-dark text-decoration-none p-0" onClick={() => {setFavoriteData(productModal)}}>
                                         <i className={`${isFavorite ? 'fas' : 'far'} fa-heart me-2`}></i>Add to wish list
                                     </a>

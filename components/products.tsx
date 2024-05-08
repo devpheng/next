@@ -13,7 +13,7 @@ export const Products = async () => {
                     return <Product product={product} addToCart={addToCart}/> 
                 })}
             </div>
-            <Modal/>
+            <Modal addToCart={addToCart}/>
         </>
     )
 }

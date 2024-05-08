@@ -58,7 +58,7 @@ export const addToCart = async (productId, qty=1) => {
                 data: {
                     productId: parseInt(productId),
                     userId: user.id,
-                    qty
+                    qty: parseInt(qty)
                 }
             }
         );
