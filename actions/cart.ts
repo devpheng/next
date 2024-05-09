@@ -68,3 +68,33 @@ export const addToCart = async (productId, qty=1) => {
     }
 
 }
+
+export const removeCart = async (id: number) => {
+    try {
+        const cart = id && await prisma.cart.delete({
+            where: {
+                id,
+            },
+        });
+        return cart;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const updateCartQty = async (id: number, qty: number) => {
+    try {
+        const cart = id && await prisma.cart.update({
+            where: {
+                id
+            },
+            data: {
+                qty
+            },
+        });
+        return cart;
+    } catch (error) {
+        console.log(error);
+    }
+
+}
