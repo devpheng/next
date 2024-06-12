@@ -26,6 +26,7 @@ model User {
 model Category {
   id        Int       @id @default(autoincrement())
   name      String
+  parent_id Int?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Product   Product[]
