@@ -30,6 +30,8 @@ model Category {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Product   Product[]
+  super   Category?   @relation("SuperSubs", fields: [parent_id], references: [id])
+  subs  Category[]  @relation("SuperSubs")
 }
 
 model Photo {

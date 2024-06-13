@@ -47,10 +47,10 @@ export const Header = () => {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto">
                             <li className="nav-item">
-                                <Link className="nav-link active" href="/">Home</Link>
+                                <Link className="nav-link" href="/">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="shop.html">Shop</a>
+                                <Link className="nav-link" href="/products">Products</Link>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="detail.html">Product detail</a>
