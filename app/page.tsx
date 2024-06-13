@@ -14,7 +14,7 @@ export default function Home() {
                     <p className="small text-muted small text-uppercase mb-1">Made the hard way</p>
                     <h2 className="h5 text-uppercase mb-4">Top trending products</h2>
                 </header>
-                <Products />
+                <Products size="8" />
             </section>
 
             <section className="py-5 bg-light">

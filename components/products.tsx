@@ -3,8 +3,8 @@ import { Product } from "./product";
 import { Modal } from '@/components/modal'
 import { addToCart } from "@/actions/cart";
 
-export const Products = async () => {
-    const products: any = await getProducts();
+export const Products = async ({size = 1000}) => {
+    const products: any = await getProducts(size);
 
     return (
         <>

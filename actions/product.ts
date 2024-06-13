@@ -4,7 +4,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 const prisma = new PrismaClient()
 
-export const getProducts = async () => {
+export const getProducts = async (size = "1000") => {
     try {
         const session = await getServerSession(authOptions);
         let user;
@@ -24,13 +24,18 @@ export const getProducts = async () => {
                         user: true
                     }
                 }
-            },});
+            },
+            take: parseInt(size)});
         } else {
             products = await prisma.product.findMany({include: {
                 photos: true
-            },});
+            },
+            take: parseInt(size)});
         }
 
+        console.log("==================");
+        console.log(products);
+        console.log("==================");
         return products;
     } catch (error) {
         console.log(error);
