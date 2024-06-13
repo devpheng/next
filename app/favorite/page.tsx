@@ -1,6 +1,7 @@
 "use client"
 import { useData } from "@/context/datacontext";
 import { Product } from "@/components/product";
+import { addToCart } from "@/actions/cart";
 
 export default function Favorite() {
     const { favorite, setFavorite } = useData();
@@ -11,7 +12,7 @@ export default function Favorite() {
             <div className="row">
                 {favorite.map((product: any) => {
                     console.log(product);
-                    return <Product product={product} key={product.id}/> 
+                    return <Product product={product} addToCart={addToCart}/> 
                 })}
             </div>
         </div>

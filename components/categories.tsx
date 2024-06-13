@@ -10,7 +10,7 @@ export const Categories = () => {
         </header>
         <div className="row">
             <div className="col-md-4">
-                <a className="category-item" href="shop.html">
+                <a className="category-item" href="#">
                     <Image
                         src="/assets/img/cat-img-1.jpg"
                         alt="cat-img-1.jpg"
@@ -23,7 +23,7 @@ export const Categories = () => {
                 </a>
             </div>
             <div className="col-md-4">
-                <a className="category-item mb-4" href="shop.html">
+                <a className="category-item mb-4" href="#">
                     <Image
                         src="/assets/img/cat-img-2.jpg"
                         alt="cat-img-2.jpg"
@@ -34,7 +34,7 @@ export const Categories = () => {
                     />
                     <strong className="category-item-title">Shoes</strong>
                 </a>
-                <a className="category-item" href="shop.html">
+                <a className="category-item" href="#">
                     <Image
                         src="/assets/img/cat-img-3.jpg"
                         alt="cat-img-3.jpg"
@@ -47,7 +47,7 @@ export const Categories = () => {
                 </a>
             </div>
             <div className="col-md-4">
-                <a className="category-item" href="shop.html">
+                <a className="category-item" href="#">
                     <Image
                         src="/assets/img/cat-img-4.jpg"
                         alt="cat-img-4.jpg"

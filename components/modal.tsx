@@ -103,13 +103,13 @@ export const Modal = ({ addToCart }) => {
                                     <p className="text-sm mb-4">{productModal.description}</p>
                                     <form action={addToCarts}>
                                         <div className="row align-items-stretch mb-4 gx-0">
-                                            <input type="hidden" value={productModal.id} name="productId" defaultValue={productModal.id}/>
+                                            <input type="hidden" value={productModal.id} name="productId" />
                                             <div className="col-sm-7">
                                                 <div className="border d-flex align-items-center justify-content-between py-1 px-3">
                                                     <span className="small text-uppercase text-gray mr-4 no-select">Quantity</span>
                                                     <div className="quantity">
                                                         <button className="dec-btn p-0" onClick={(e) => { e.preventDefault(); setQty((qty - 1) < 1 ? 1 : qty - 1)}} ><i className="fas fa-caret-left"></i></button>
-                                                        <input className="form-control border-0 shadow-0 p-0" type="text" defaultValue={qty}  value={qty} name="qty"/>
+                                                        <input className="form-control border-0 shadow-0 p-0" type="text"  value={qty} name="qty"/>
                                                         <button className="inc-btn p-0" onClick={(e) => { e.preventDefault(); setQty(qty + 1)}}><i className="fas fa-caret-right"></i></button>
                                                     </div>
                                                 </div>

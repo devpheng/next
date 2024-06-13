@@ -42,9 +42,9 @@ export const Product = ({ product, addToCart }) => {
             setFavorite(favs);
         } else {
             let {id, name, price} = product;
-            let photo = product.photos[0].url;
+            let photos = product.photos;
             let favorites = [{id: res?.id}]
-            let favs = [...favorite, {id, name, price, photo, favorites}];
+            let favs = [...favorite, {id, name, price, photos, favorites}];
             setFavorite(favs);
         }
     }
@@ -94,7 +94,7 @@ export const Product = ({ product, addToCart }) => {
                             </li>
                             <li className="list-inline-item m-0 p-0">
                                 <form action={addToCarts}>
-                                    <input type="hidden" name="productId" value={product.id} defaultValue={product.id} />
+                                    <input type="hidden" name="productId" value={product.id} />
                                     <button type="submit" className="btn btn-sm btn-dark">Add to cart</button>
                                 </form>
                             </li>
