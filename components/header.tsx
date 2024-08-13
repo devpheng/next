@@ -53,11 +53,11 @@ export const Header = () => {
                                 <Link className="nav-link" href="/products">Products</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="detail.html">Product detail</a>
+                                <Link className="nav-link" href="/about">About Us</Link>
                             </li>
-                            <li className="nav-item dropdown"><a className="nav-link dropdown-toggle" id="pagesDropdown" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+                            {/* <li className="nav-item dropdown"><a className="nav-link dropdown-toggle" id="pagesDropdown" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
                                 <div className="dropdown-menu mt-3 shadow-sm" aria-labelledby="pagesDropdown"><a className="dropdown-item border-0 transition-link" href="index.html">Homepage</a><a className="dropdown-item border-0 transition-link" href="shop.html">Category</a><a className="dropdown-item border-0 transition-link" href="detail.html">Product detail</a><a className="dropdown-item border-0 transition-link" href="cart.html">Shopping cart</a><a className="dropdown-item border-0 transition-link" href="checkout.html">Checkout</a></div>
-                            </li>
+                            </li> */}
                         </ul>
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item">
