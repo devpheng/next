@@ -18,7 +18,7 @@ export default async function Category() {
                                     category.subs.map((sub) => {
                                         return (
                                             <li className="mb-2">
-                                                <Link className="reset-anchor" href="/">
+                                                <Link className="reset-anchor" href={"/products/" + sub.id}>
                                                     {sub.name}
                                                 </Link>
                                             </li>
