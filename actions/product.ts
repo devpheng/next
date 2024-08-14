@@ -48,3 +48,46 @@ export const getProducts = async (size = "1000", categoryId=null) => {
         console.log(error);
     }
 }
+
+export const getProduct = async (id) => {
+    try {
+        const session = await getServerSession(authOptions);
+        let user;
+        let product;
+        if(session) {
+            const email = session?.user?.email;
+            user = await prisma.user.findFirst({where: {
+                email
+            }});
+            let condition = {
+                    include: {
+                        photos: true,
+                        reviews: true,
+                        favorites: {
+                            where: { userId: user?.id },
+                            include: {
+                                user: true
+                            }
+                        }
+                    },
+                    where: {
+                        id
+                    }
+                };
+            product = await prisma.product.findFirst(condition);
+        } else {
+            let condition = {
+                include: {
+                    photos: true
+                },
+                where: {
+                    id
+                }
+            }
+            product = await prisma.product.findFirst(condition);
+        }
+        return product;
+    } catch (error) {
+        console.log(error);
+    }
+}
