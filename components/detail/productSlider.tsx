@@ -6,9 +6,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 // import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Pagination, EffectCoverflow } from "swiper";
-
-SwiperCore.use([Pagination, EffectCoverflow]);
 
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 

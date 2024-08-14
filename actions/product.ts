@@ -63,6 +63,7 @@ export const getProduct = async (id) => {
                     include: {
                         photos: true,
                         reviews: true,
+                        category: true,
                         favorites: {
                             where: { userId: user?.id },
                             include: {
@@ -78,7 +79,8 @@ export const getProduct = async (id) => {
         } else {
             let condition = {
                 include: {
-                    photos: true
+                    photos: true,
+                    category: true,
                 },
                 where: {
                     id
@@ -86,6 +88,10 @@ export const getProduct = async (id) => {
             }
             product = await prisma.product.findFirst(condition);
         }
+
+        const stars = product.reviews.map(review => review.star);
+        product.avgRating = stars.reduce((total, current) => total + current, 0) / stars.length;
+
         return product;
     } catch (error) {
         console.log(error);
