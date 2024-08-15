@@ -69,7 +69,7 @@ export const ProductDetail = ({product, addToCart}) => {
                 {(() => {
                     let rows = [];
                     for (let i = 1; i <= 5; i++) {
-                        rows.push(<li className="list-inline-item m-0"><i className={`fas fa-star small ${i <= Math.ceil(product.avgRating) ? "text-warning" : "text-gray"}`}></i></li>);
+                        rows.push(<li className="list-inline-item m-0" key={i}><i className={`fas fa-star small ${i <= Math.ceil(product.avgRating) ? "text-warning" : "text-gray"}`}></i></li>);
                     }
                     return (rows);
                 })()}

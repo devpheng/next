@@ -62,7 +62,11 @@ export const getProduct = async (id) => {
             let condition = {
                     include: {
                         photos: true,
-                        reviews: true,
+                        reviews: {
+                            include: {
+                                createdBy: true
+                            }
+                        },
                         category: true,
                         favorites: {
                             where: { userId: user?.id },
@@ -80,6 +84,11 @@ export const getProduct = async (id) => {
             let condition = {
                 include: {
                     photos: true,
+                    reviews: {
+                        include: {
+                            createdBy: true
+                        }
+                    },
                     category: true,
                 },
                 where: {
