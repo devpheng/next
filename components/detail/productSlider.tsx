@@ -9,9 +9,23 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 
+import GLightbox from 'glightbox';
+
 export const ProductSlider = ({photos}) => {
 
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
+    const myGallery = photos.map((photo) => {
+        return {
+            'href': photo.url,
+            'type': 'image',
+        }
+    })
+
+    const lightbox = GLightbox({
+        elements: myGallery,
+        autoplayVideos: false,
+    });
 
     return (
         <div className="row m-sm-0">
@@ -63,7 +77,7 @@ export const ProductSlider = ({photos}) => {
                         photos.map((photo, i) => {
                             return (
                                 <SwiperSlide className="h-auto" key={i}>
-                                    <a className="glightbox product-view" href="#" data-gallery="gallery2" data-glightbox="Product item 1">
+                                    <a className="glightbox product-view" onClick={()=>{lightbox.settings.startAt = i;lightbox.open()}}>
                                         <Image width={0}
                                             height={0}
                                             sizes="100vw"
