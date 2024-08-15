@@ -5,6 +5,7 @@ import { useData } from "@/context/datacontext";
 import Image from "next/image";
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
+import Link from "next/link";
 
 
 export const Product = ({ product, addToCart }) => {
@@ -75,7 +76,7 @@ export const Product = ({ product, addToCart }) => {
             <div className="product text-center">
                 <div className="position-relative mb-3">
                     <div className="badge text-white bg-"></div>
-                    <a className="d-block" href="detail.html">
+                    <Link className="d-block" href={`/detail/${product.id}`}>
                         <Image
                             src={product.photos ? product.photos[0]?.url : product.photo }
                             alt={product.name}
@@ -84,7 +85,7 @@ export const Product = ({ product, addToCart }) => {
                             sizes="100vw"
                             style={{ width: '100%', height: 'auto' }}
                         />
-                    </a>
+                    </Link>
                     <div className="product-overlay">
                         <ul className="mb-0 list-inline">
                             <li className="list-inline-item m-0 p-0">

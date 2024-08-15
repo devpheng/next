@@ -9,11 +9,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 
-import GLightbox from 'glightbox';
+
 
 export const ProductSlider = ({photos}) => {
 
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const [lightbox, setLightbox] = useState({});
 
     const myGallery = photos.map((photo) => {
         return {
@@ -22,10 +23,18 @@ export const ProductSlider = ({photos}) => {
         }
     })
 
-    const lightbox = GLightbox({
-        elements: myGallery,
-        autoplayVideos: false,
-    });
+    useEffect(() => {
+        if (typeof window !== 'undefined') { 
+            const GLightbox = require('glightbox');
+            const lightbox = GLightbox({
+                elements: myGallery,
+                autoplayVideos: false,
+            });
+    
+            setLightbox(lightbox);
+        }
+    }, [photos])
+    
 
     return (
         <div className="row m-sm-0">
