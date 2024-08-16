@@ -39,6 +39,7 @@ export default function RootLayout({
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martel+Sans:wght@300;400;800&amp;display=swap" />
             <link rel="stylesheet" href="/assets/css/style.default.css" id="theme-stylesheet" />
             <link rel="stylesheet" href="/assets/css/custom.css" />
+            <link rel="stylesheet" href="/assets/css/list.css" />
           </head>
           <body className={inter.className}>
               <div className="page-holder">

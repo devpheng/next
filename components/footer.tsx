@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="bg-dark text-white">
@@ -17,7 +19,7 @@ export default function Footer() {
                     <ul className="list-unstyled mb-0">
                     <li><a className="footer-link" href="#!">What We Do</a></li>
                     <li><a className="footer-link" href="#!">Available Services</a></li>
-                    <li><a className="footer-link" href="#!">Latest Posts</a></li>
+                    <li><Link className="footer-link" href="/post">Latest Posts</Link></li>
                     <li><a className="footer-link" href="#!">FAQs</a></li>
                     </ul>
                 </div>
