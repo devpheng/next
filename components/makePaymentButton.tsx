@@ -1,13 +1,19 @@
 "use client"
 import { useData } from "@/context/datacontext";
 
-export const MakePaymentButton = ({makePayment}) => {
-    const { carts } = useData();
+export const MakePaymentButton = ({removeCart, makePayment}) => {
+    const { carts, setCarts } = useData();
 
     const pay = async () => {
         const session = await makePayment(carts);
+
+        carts.forEach((item) => {
+            removeCart(item.id);
+        });
+
+        setCarts([]);
+
         window.location.href = session.url;
-        console.log(session.url);
     }
 
     return (

@@ -36,7 +36,7 @@ export default function Cart() {
                             <div className="row align-items-center text-center">
                             <div className="col-md-6 mb-3 mb-md-0 text-md-start"><a className="btn btn-link p-0 text-dark btn-sm" href="shop.html"><i className="fas fa-long-arrow-alt-left me-2"> </i>Continue shopping</a></div>
                             <div className="col-md-6 text-md-end">
-                                <MakePaymentButton makePayment={makePayment}/>
+                                <MakePaymentButton makePayment={makePayment} removeCart={removeCart}/>
                             </div>
                             </div>
                         </div>

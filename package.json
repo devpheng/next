@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migrate": "npx prisma migrate dev --name $NAME"
+    "migrate": "npx prisma migrate dev --name $NAME",
+    "stripe": "stripe listen --forward-to localhost:3000/api/webhook/stripe"
   },
   "dependencies": {
     "@prisma/client": "^5.7.1",
@@ -17,7 +18,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
-    "stripe": "^17.2.0",
+    "stripe": "^17.5.0",
     "swiper": "^11.1.9"
   },
   "devDependencies": {
